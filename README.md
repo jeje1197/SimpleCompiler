@@ -35,7 +35,7 @@ argument.
 Data types in SimpleC:
     String, Int
 
-    ex:
+    ex.
         "This is a string"
         123
 
