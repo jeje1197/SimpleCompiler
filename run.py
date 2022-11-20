@@ -16,7 +16,7 @@ def run(source_file, output_file):
         ('SKIP', ' |\t'), # White space
         ('NEWLINE', '\n'), # Newline
         ('NUMBER', '[0-9]+(\.[0-9]+)?'),
-        ('STRING', '".*"'),
+        ('STRING', '".*?"'),
         ('ID', '[a-zA-Z_][a-zA-Z_0-9]*'),
         ('PLUS', '\+'),
         ('MINUS', '\+'),

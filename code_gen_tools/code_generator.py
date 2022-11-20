@@ -1,20 +1,39 @@
 from .classes import Number, String, BinOp
 
+INITIALIZER_CODE = """
+#include <stdio.h>
+#include <string.h>
+
+char* addStrings(char* str1, char* str2, char* dest) {
+    strcat(dest, str1);
+	strcat(dest, str2);
+    return dest;
+}
+
+/* Compiled from SimpleC to C */
+"""
+
+MAIN_START = """\
+int main(int argc, char *argv[]) {
+	char dest[80] = "";
+"""
+
+MAIN_END = """\
+    return 0;
+}"""
+
 class CodeGenerator:
     def __init__(self) -> None:
         self.output = ""
 
     def generate_code(self, ast, file_name) -> None:
-        init_code = '#include <stdio.h>\n\n'
-        init_code += '// Compiled from Simple C to C\n'
-        init_code += 'int main(int argc, char *argv[]) {\n'
-        end_code = '\treturn 0;\n}'
-
         self.visit(ast)
+
+        generated_code = INITIALIZER_CODE + MAIN_START + self.output + MAIN_END
         
         # Write to file
         f = open(file_name, 'w')
-        f.write(init_code + self.output + end_code)
+        f.write(generated_code)
         print(f"File generated: '{file_name}'")
 
     def visit(self, node):
@@ -39,7 +58,11 @@ class CodeGenerator:
         left = self.visit(node.left_node)
         op = node.op.value
         right = self.visit(node.right_node)
-        return BinOp(type(left).__name__, f'({left} {op} {right})')
+
+        if isinstance(left, String):
+            return BinOp(type(left).__name__, f'addStrings({left}, {right}, dest)')
+        elif isinstance(left, Number):
+            return BinOp(type(left).__name__, f'({left} {op} {right})')
 
     def visit_Command(self, node):
         cmd_name = node.name
@@ -59,6 +82,6 @@ class CodeGenerator:
                 print_statement += '%s'
             else:
                 raise Exception("Error: Print statement")
-            print_statement += f'\\n", {arg});\n'
+            print_statement += f'\\n", {arg.value});\n'
 
             self.output += print_statement

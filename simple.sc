@@ -1,2 +1,2 @@
 print 5 + 20 * 3
-print "hello there"
+print "Hello" + " my friend!"
