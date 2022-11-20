@@ -1,4 +1,4 @@
-"# SimpleC"
+# SimpleC
 
 SimpleC is a compiler that targets the C language.
 Created by Joseph Evans
