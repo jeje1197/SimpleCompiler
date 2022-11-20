@@ -1,10 +1,12 @@
+# SimpleC
+
 SimpleC is a compiler that targets the C language.
 Created by Joseph Evans
 
 To run the compiler, run the python file 'run.py' from the command line
-with 2 arguments (1st: Source_File_Path, 2nd: Destination_File_Path)
-    ex. 
-        "python run.py input.txt output.c"
+with 2 arguments (Source_File_Path, Destination_File_Path)
+        
+        python run.py input.txt output.c
 
 If the code compiles successfully, a file will be generated at the specified
 path.
@@ -33,11 +35,9 @@ argument.
 Data types in SimpleC:
     String, Int
 
-    ex:
+    ex.
         "This is a string"
         123
 
 Operators:
     +, -, *, /
-
-"# SimpleCompiler" 
