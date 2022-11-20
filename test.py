@@ -1,4 +1,5 @@
 from lexer import Lexer
+from hw_parser import Parser
 
 def get_file_text(file_name):
     f = open(file_name, 'r')
@@ -17,14 +18,17 @@ def run():
         ('ID', '[a-zA-Z_][a-zA-Z_0-9]*'),
         ('PLUS', '\+'),
         ('MINUS', '\+'),
-        ('MUL', '\+'),
-        ('DIV', '\+'),
+        ('MUL', '\\'),
+        ('DIV', '/'),
         ('LPAREN', '('),
         ('RPAREN', ')'),
     ]
     lexer.set_rules(rules)
     tokens = lexer.get_tokens(get_file_text('simple.sc'))
-    print(tokens)
+
+    parser = Parser(tokens)
+    ast = parser.parse()
+    print(ast)
 
 if __name__ == '__main__':
     run()

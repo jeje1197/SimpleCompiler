@@ -78,6 +78,7 @@ class Lexer:
         return tokens
 
 
+# Example
 if __name__ == '__main__':
     lexer = Lexer()
     rules = [
