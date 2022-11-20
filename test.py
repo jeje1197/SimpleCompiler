@@ -1,5 +1,6 @@
-from lexer import Lexer
-from hw_parser import Parser
+from parsing_tools.lexer import Lexer
+from parsing_tools.hw_parser import Parser
+from code_gen_tools.type_checker import TypeChecker
 
 def get_file_text(file_name):
     f = open(file_name, 'r')
@@ -28,7 +29,13 @@ def run():
 
     parser = Parser(tokens)
     ast = parser.parse()
-    print(ast)
+    # print(ast)
+
+    tc = TypeChecker()
+    tc.visit(ast)
+
+    cg = CodeGenerator()
+    cg.generate(ast)
 
 if __name__ == '__main__':
     run()

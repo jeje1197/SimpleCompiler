@@ -1,4 +1,4 @@
-from parser_classes import Command, StringNode, NumberNode, BinOp
+from .parser_classes import Command, StringNode, NumberNode, BinOpNode
 
 class Parser:
     def __init__(self, tokens):
@@ -14,7 +14,10 @@ class Parser:
             self.next = None
 
     def parse(self):
-        return self.statement()
+        program_statements = []
+        while self.next:
+            program_statements.append(self.statement())
+        return program_statements
 
     def statement(self):
         if not self.next.type == 'ID':
@@ -26,6 +29,9 @@ class Parser:
         if not expr_node:
             raise Exception("Invalid expression after command")
 
+        if self.next and self.next.type != 'NEWLINE':
+            raise Exception("Newline expected after statement")
+        self.get_next()
         return Command(command_name, expr_node)
 
     def expr(self):
@@ -57,6 +63,6 @@ class Parser:
         while self.next and self.next.type in ops:
             op = self.next
             self.get_next()
-            left = BinOp(left, op, function2())
+            left = BinOpNode(left, op, function2())
         return left
     
