@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <string.h>
 
@@ -11,7 +10,7 @@ char* addStrings(char* str1, char* str2, char* dest) {
 /* Compiled from SimpleC to C */
 int main(int argc, char *argv[]) {
 	char dest[80] = "";
-	printf("%d\n", (5 + (20 * 3)));
-	printf("%s\n", addStrings("Hello", " my friend!", dest));
+	printf("%d\n", ((55 - 64) / 28));
+	printf("%s\n", "Hi");
     return 0;
 }

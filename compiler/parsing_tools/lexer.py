@@ -8,7 +8,7 @@ class Token:
         self.end_pos = end_pos
 
     def __repr__(self) -> str:
-        return f"({self.type}, {self.value})"
+        return f"({self.type})"
 
 class Position:
     def __init__(self, fn, text):

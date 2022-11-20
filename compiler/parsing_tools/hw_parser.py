@@ -13,14 +13,19 @@ class Parser:
         else:
             self.next = None
 
+    def skip_newlines(self):
+        while self.next and self.next.type == 'NEWLINE':
+            self.get_next()
+
     def parse(self):
         program_statements = []
         while self.next:
+            self.skip_newlines()
             program_statements.append(self.statement())
         return program_statements
 
     def statement(self):
-        if not self.next.type == 'ID':
+        if not self.next or self.next.type != 'ID':
             raise Exception("Invalid Statement" + str(self.next.start_pos))
         command_name = self.next.value
         self.get_next()

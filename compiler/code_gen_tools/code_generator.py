@@ -1,6 +1,6 @@
 from .classes import Number, String, BinOp
 
-INITIALIZER_CODE = """
+INITIALIZER_CODE = """\
 #include <stdio.h>
 #include <string.h>
 
@@ -60,9 +60,9 @@ class CodeGenerator:
         right = self.visit(node.right_node)
 
         if isinstance(left, String):
-            return BinOp(type(left).__name__, f'addStrings({left}, {right}, dest)')
+            return String(f'addStrings({left}, {right}, dest)')
         elif isinstance(left, Number):
-            return BinOp(type(left).__name__, f'({left} {op} {right})')
+            return Number(f'({left} {op} {right})')
 
     def visit_Command(self, node):
         cmd_name = node.name
@@ -73,6 +73,8 @@ class CodeGenerator:
                 arg = Number(arg.value)
             elif arg.type == 'String':
                 arg = String(arg.value)
+            else: 
+                raise Exception("BinOp not changed")
 
         if cmd_name == 'print':
             print_statement = '\tprintf("'
