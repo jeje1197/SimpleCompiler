@@ -27,7 +27,11 @@ class TypeChecker:
         right = self.visit(node.right_node)
 
         if type(left).__name__ != type(right).__name__:
-            raise Exception(f"Operation: '{node.op}' cannot be performed on {type(left)} and {type(right)}")
+            raise Exception(f"Operation: '{node.op.value}' cannot be performed on {type(left)} and {type(right)}")
+
+        if isinstance(left, String):
+            if node.op.type != 'PLUS':
+                raise Exception(f"Invalid operator for string: '{node.op.value}'")
         return left
 
     def visit_Command(self, node):
@@ -35,3 +39,4 @@ class TypeChecker:
         cmd_name = node.name
         if cmd_name not in cmd_list:
             raise Exception(f"Command not defined: '{cmd_name}'")
+        self.visit(node.expr)

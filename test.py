@@ -1,6 +1,7 @@
 from parsing_tools.lexer import Lexer
 from parsing_tools.hw_parser import Parser
 from code_gen_tools.type_checker import TypeChecker
+from code_gen_tools.code_generator import CodeGenerator
 
 def get_file_text(file_name):
     f = open(file_name, 'r')
@@ -8,7 +9,7 @@ def get_file_text(file_name):
     f.close()
     return file_text
 
-def run():
+def run(source_file, output_file):
     lexer = Lexer()
     rules = [
         ('SKIP', '//.*\n?'), # Comments
@@ -19,13 +20,13 @@ def run():
         ('ID', '[a-zA-Z_][a-zA-Z_0-9]*'),
         ('PLUS', '\+'),
         ('MINUS', '\+'),
-        ('MUL', '\\'),
+        ('MUL', '\*'),
         ('DIV', '/'),
         ('LPAREN', '('),
         ('RPAREN', ')'),
     ]
     lexer.set_rules(rules)
-    tokens = lexer.get_tokens(get_file_text('simple.sc'))
+    tokens = lexer.get_tokens(get_file_text(source_file))
 
     parser = Parser(tokens)
     ast = parser.parse()
@@ -35,7 +36,7 @@ def run():
     tc.visit(ast)
 
     cg = CodeGenerator()
-    cg.generate(ast)
+    code = cg.generate_code(ast, output_file)
 
 if __name__ == '__main__':
-    run()
+    run('simple.sc', 'output.c')
